@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MacMannis Florist &amp; Greenhouses — Workshops &amp; Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#1f3d2b;
+    --green-soft:#2f5740;
+    --cream:#f8f2e4;
+    --cream-2:#f1e8d4;
+    --pink:#cd6389;
+    --pink-soft:#e39bb4;
+    --amber:#e0a42c;
+    --ink:#243026;
+    --muted:#6d7a6f;
+    --tape:rgba(224,164,44,.35);
+    --shadow:0 18px 40px -18px rgba(31,61,43,.45);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.1;letter-spacing:-.01em}
+  .hand{font-family:'Caveat',cursive;font-weight:600}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .center{text-align:center}
+
+  /* top bar */
+  .topbar{background:var(--green);color:var(--cream);font-size:.82rem}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 24px;flex-wrap:wrap}
+  .topbar a{text-decoration:none;opacity:.9}
+  .topbar a:hover{opacity:1}
+  .topbar .dot{opacity:.4;margin:0 8px}
+
+  /* sticky nav */
+  .snav{position:fixed;top:0;left:0;right:0;z-index:60;background:rgba(31,61,43,.96);backdrop-filter:blur(8px);color:var(--cream);transform:translateY(-100%);transition:transform .45s ease;box-shadow:0 8px 24px -10px rgba(0,0,0,.5)}
+  .snav.show{transform:none}
+  .snav .wrap{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;gap:18px}
+  .snav .brand{font-family:'Fraunces',serif;font-weight:700;font-size:1.05rem;white-space:nowrap}
+  .snav .brand span{color:var(--pink-soft)}
+  .snav nav{display:flex;gap:22px}
+  .snav nav a{text-decoration:none;font-size:.9rem;color:#dfe7e0;transition:color .2s}
+  .snav nav a:hover{color:#fff}
+  .snav .snav-cta{background:var(--pink);color:#2a121b;text-decoration:none;font-weight:600;font-size:.85rem;padding:8px 16px;border-radius:999px;white-space:nowrap}
+
+  /* hero */
+  .hero{position:relative;background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(205,99,137,.12), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(224,164,44,.14), transparent 55%),
+      var(--cream);
+    padding:64px 0 40px;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .eyebrow{font-family:'Caveat',cursive;font-size:1.5rem;color:var(--pink);transform:rotate(-2deg);display:inline-block}
+  .hero h1{font-size:clamp(2.6rem,5vw,4rem);margin:6px 0 18px;color:var(--green)}
+  .hero h1 em{font-style:italic;color:var(--pink)}
+  .hero p.lead{font-size:1.12rem;color:var(--muted);max-width:34ch}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;font-weight:600;text-decoration:none;font-size:.98rem;transition:transform .15s ease,box-shadow .15s ease;border:2px solid transparent;cursor:pointer;font-family:inherit}
+  .btn-primary{background:var(--green);color:var(--cream);box-shadow:var(--shadow)}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{border-color:var(--green);color:var(--green)}
+  .btn-ghost:hover{background:var(--green);color:var(--cream)}
+
+  .feature-card{position:relative;background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:16px;transform:rotate(1.5deg)}
+  .feature-card .ph{border-radius:14px;aspect-ratio:4/3}
+  .feature-badge{position:absolute;top:-16px;left:-14px;background:var(--pink);color:#fff;font-weight:600;font-size:.8rem;padding:8px 16px;border-radius:999px;transform:rotate(-4deg);box-shadow:var(--shadow);z-index:3}
+  .spots{position:absolute;bottom:26px;right:26px;background:var(--amber);color:#3a2c07;font-weight:700;font-size:.82rem;padding:7px 14px;border-radius:999px;transform:rotate(3deg);box-shadow:0 8px 18px -6px rgba(0,0,0,.3);z-index:3}
+  .feature-meta{padding:14px 10px 8px}
+  .feature-meta h3{font-size:1.35rem;color:var(--green)}
+  .feature-meta .when{color:var(--pink);font-weight:600;font-family:'Caveat',cursive;font-size:1.25rem}
+
+  .hero-leaf{position:absolute;font-size:2.1rem;opacity:.4;pointer-events:none;transform-origin:top center;animation:sway 5.5s ease-in-out infinite}
+  @keyframes sway{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  .leaf1{top:30px;left:3%}
+  .leaf2{bottom:34px;left:7%;font-size:1.7rem;animation-delay:-2.4s;opacity:.35}
+  .leaf3{top:20px;right:3%;font-size:1.6rem;animation-delay:-1.2s;opacity:.3}
+
+  /* photo placeholder system */
+  .ph{position:relative;background:
+      repeating-linear-gradient(45deg,var(--cream-2),var(--cream-2) 12px,#ece1c9 12px,#ece1c9 24px);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:120px}
+  .ph::after{content:attr(data-label);position:absolute;font-family:'Caveat',cursive;font-size:1.05rem;color:#a08a5f;text-align:center;padding:10px 14px;line-height:1.25}
+  .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  /* section shell */
+  section{padding:74px 0}
+  .sec-head{max-width:640px;margin:0 auto 44px}
+  .sec-head .eyebrow{font-size:1.6rem}
+  .sec-head h2{font-size:clamp(2rem,3.6vw,2.9rem);color:var(--green);margin-top:4px}
+  .sec-head p{color:var(--muted);margin-top:12px}
+
+  /* greenhouse feature band */
+  #greenhouse{background:linear-gradient(180deg,#fbf6ea,var(--cream));padding:70px 0}
+  .gh-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:52px;align-items:center}
+  .gh-photo{position:relative;background:#fff;padding:14px 14px 22px;border-radius:6px;box-shadow:var(--shadow);transform:rotate(-1.6deg);max-width:400px}
+  .gh-photo .ph{border-radius:3px;aspect-ratio:4/5}
+  .gh-photo::before{content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-2deg);width:130px;height:28px;background:var(--tape);border-radius:2px}
+  .gh-tag{position:absolute;bottom:-15px;right:-12px;background:var(--amber);color:#3a2c07;font-family:'Caveat',cursive;font-weight:700;font-size:1.3rem;padding:6px 17px;border-radius:999px;transform:rotate(4deg);box-shadow:var(--shadow)}
+  .gh-grid .eyebrow{font-size:1.6rem}
+  .gh-grid h2{font-size:clamp(1.9rem,3.4vw,2.7rem);color:var(--green);margin-top:4px}
+  .gh-grid p{color:var(--muted);margin-top:12px}
+
+  /* events */
+  #events{background:linear-gradient(180deg,var(--cream) 0%,#fbf6ea 100%)}
+  .events-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .event{background:#fff;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .18s ease}
+  .event:hover{transform:translateY(-4px)}
+  .event .ph{aspect-ratio:3/2}
+  .event-body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .date-chip{align-self:flex-start;display:inline-flex;flex-direction:column;align-items:center;background:var(--green);color:var(--cream);border-radius:12px;padding:6px 12px;line-height:1;font-family:'Fraunces',serif}
+  .date-chip .m{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .date-chip .d{font-size:1.5rem;font-weight:700;margin-top:3px}
+  .event h3{font-size:1.28rem;color:var(--green)}
+  .event p{font-size:.94rem;color:var(--muted);flex:1}
+  .event .foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+  .price{font-family:'Fraunces',serif;font-weight:600;color:var(--pink);font-size:1.05rem}
+  .mini{font-size:.9rem;font-weight:600;text-decoration:none;color:var(--green);border-bottom:2px solid var(--amber);padding-bottom:1px;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;font-family:inherit}
+  .event.soldout .date-chip{background:var(--muted)}
+  .soldout-ribbon{align-self:flex-start;background:var(--amber);color:#3a2c07;font-weight:700;font-size:.78rem;padding:5px 12px;border-radius:999px}
+  .demo-flag{display:inline-block;font-size:.72rem;color:#b98a2f;background:#fdf3d8;border:1px dashed #e0b658;border-radius:6px;padding:2px 8px;margin-top:2px}
+
+  /* scrapbook gallery */
+  #gallery{background:var(--green);color:var(--cream)}
+  #gallery .sec-head h2{color:var(--cream)}
+  #gallery .sec-head .eyebrow{color:var(--amber)}
+  #gallery .sec-head p{color:#c9d6ca}
+  .scrap{display:grid;grid-template-columns:repeat(5,1fr);gap:8px 22px}
+  .polaroid{background:#fff;padding:12px 12px 18px;border-radius:4px;box-shadow:var(--shadow);position:relative;border:none;cursor:pointer;font:inherit}
+  .polaroid .ph{aspect-ratio:1;border-radius:2px}
+  .polaroid figcaption{font-family:'Caveat',cursive;font-size:1.15rem;color:#5a4a2e;text-align:center;padding-top:8px}
+  .polaroid::before{content:"";position:absolute;top:-11px;left:50%;transform:translateX(-50%) rotate(-3deg);width:78px;height:26px;background:var(--tape);border-radius:2px}
+
+  /* services */
+  .serv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .serv{display:grid;grid-template-columns:150px 1fr;gap:20px;background:#fff;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .serv-ph{position:relative;border:none;padding:0;margin:0;background:none;cursor:pointer;min-height:100%;display:block}
+  .serv-ph .ph{height:100%;min-height:100%}
+  .serv-more{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(31,61,43,.55);color:#fff;font-weight:600;font-size:.82rem;opacity:0;transition:opacity .25s}
+  .serv-ph:hover .serv-more,.serv-ph:focus-visible .serv-more{opacity:1}
+  .serv-body{padding:22px 24px 22px 4px}
+  .serv-body h3{font-size:1.3rem;color:var(--green);display:flex;align-items:center;gap:8px}
+  .serv-body p{font-size:.95rem;color:var(--muted);margin-top:8px}
+  .serv-links{margin-top:12px;display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+  .tag{font-size:.72rem;font-weight:600;color:var(--pink);background:#fbe7ef;padding:3px 9px;border-radius:999px}
+
+  /* meet your host */
+  #host{background:var(--cream)}
+  .host-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .host-photo{position:relative;background:#fff;padding:12px;border-radius:8px;box-shadow:var(--shadow);transform:rotate(1.4deg);max-width:440px}
+  .host-photo .ph{border-radius:4px;aspect-ratio:1/1}
+  .host-text .eyebrow{font-size:1.6rem}
+  .host-text h2{font-size:clamp(1.8rem,3.2vw,2.5rem);color:var(--green);margin-top:4px}
+  .host-text p{color:var(--muted);margin-top:12px}
+  .host-name{font-family:'Caveat',cursive;font-size:1.35rem;color:var(--pink);margin-top:16px}
+  .ph-name{background:#fbe7ef;border:1px dashed var(--pink);border-radius:6px;padding:1px 8px}
+
+  /* delivery */
+  #delivery{background:#fbf6ea}
+  .deliver-card{background:#fff;border-radius:24px;box-shadow:var(--shadow);padding:40px 44px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+  .cities{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+  .city{font-size:.86rem;background:var(--cream-2);color:var(--green);padding:6px 13px;border-radius:999px;font-weight:500}
+  .note{font-size:.85rem;color:var(--muted);margin-top:16px;padding-left:14px;border-left:3px solid var(--amber)}
+
+  /* events list form */
+  #join{background:
+      radial-gradient(700px 300px at 90% 0%, rgba(205,99,137,.14), transparent 60%),
+      var(--green);color:var(--cream)}
+  .join-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  #join h2{color:var(--cream);font-size:clamp(2rem,3.6vw,2.9rem)}
+  #join .eyebrow{color:var(--amber)}
+  #join p{color:#cfdcd0;margin-top:12px}
+  .form-card{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:30px}
+  .form-card label{display:block;font-size:.82rem;font-weight:600;color:var(--green);margin:0 0 6px}
+  .form-card input{width:100%;padding:13px 15px;border:1.5px solid #e2d8c2;border-radius:12px;font-size:.96rem;font-family:inherit;margin-bottom:16px;background:var(--cream);color:var(--ink)}
+  .form-card input:focus{outline:none;border-color:var(--pink)}
+  .form-card .btn-primary{width:100%;justify-content:center}
+  .form-hint{font-size:.78rem;color:var(--muted);margin-top:12px;text-align:center}
+
+  /* footer */
+  footer{background:var(--green);color:var(--cream);padding:56px 0 28px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+  footer h4{font-family:'Fraunces',serif;font-size:1.15rem;margin-bottom:14px;color:#fff}
+  footer .logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700}
+  footer .logo span{color:var(--pink-soft)}
+  footer p,footer a{font-size:.92rem;color:#c9d6ca;text-decoration:none}
+  footer a:hover{color:#fff}
+  .hours-row{display:flex;justify-content:space-between;max-width:230px;padding:3px 0;border-bottom:1px dotted rgba(255,255,255,.15)}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:36px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.82rem;color:#9fb0a2}
+  .social{display:flex;gap:12px;margin-top:18px}
+  .social a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+  .social a:hover{background:var(--pink);transform:translateY(-2px)}
+  .social svg{width:20px;height:20px;fill:#fff}
+  .social a[data-soon]{position:relative}
+  .social a[data-soon]::after{content:"soon";position:absolute;bottom:-7px;right:-6px;background:var(--amber);color:#3a2c07;font-size:.55rem;font-weight:700;padding:1px 5px;border-radius:999px;font-family:'Inter',sans-serif}
+
+  .demo-banner{background:#fdf3d8;color:#7a5a12;font-size:.8rem;text-align:center;padding:8px 16px;font-weight:500}
+
+  /* lightbox */
+  .lightbox{position:fixed;inset:0;z-index:100;background:rgba(18,24,15,.93);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;padding:20px}
+  .lightbox.open{opacity:1;visibility:visible}
+  .lb-stage{max-width:min(900px,92vw);max-height:82vh;display:flex;flex-direction:column;align-items:center}
+  .lb-stage img{max-width:100%;max-height:74vh;width:auto;height:auto;border-radius:8px;box-shadow:0 30px 70px -20px rgba(0,0,0,.7);background:#fff}
+  .lb-stage figcaption{color:#e9e2cf;font-family:'Caveat',cursive;font-size:1.4rem;margin-top:14px}
+  .lb-close,.lb-nav{position:absolute;background:rgba(255,255,255,.12);color:#fff;border:none;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s}
+  .lb-close:hover,.lb-nav:hover{background:rgba(255,255,255,.28)}
+  .lb-close{top:22px;right:26px;width:46px;height:46px;font-size:1.3rem}
+  .lb-nav{top:50%;transform:translateY(-50%);width:52px;height:52px;font-size:2rem;line-height:1}
+  .lb-prev{left:24px}
+  .lb-next{right:24px}
+  .lb-count{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#cfc8b6;font-size:.85rem;letter-spacing:.1em}
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal,.reveal-fade{opacity:1 !important;transform:none !important;transition:none}
+    .polaroid,.hero-leaf{animation:none !important}
+    .snav,.lightbox{transition:none}
+    html{scroll-behavior:auto}
+  }
+
+  /* motion */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+  .reveal-fade{opacity:0;transition:opacity .9s ease}
+  .reveal.in{opacity:1;transform:none}
+  .reveal-fade.in{opacity:1}
+  @keyframes floaty{0%,100%{transform:rotate(var(--rot,0deg)) translateY(0)}50%{transform:rotate(var(--rot,0deg)) translateY(-9px)}}
+  .polaroid{--rot:0deg;animation:floaty 6.5s ease-in-out infinite;transition:transform .35s ease,box-shadow .35s ease}
+  .polaroid:nth-child(2n){--rot:2deg;animation-duration:7.3s;animation-delay:-1.6s}
+  .polaroid:nth-child(3n){--rot:-2.4deg;animation-duration:6.9s;animation-delay:-.9s}
+  .polaroid:nth-child(4n){--rot:1.4deg;animation-duration:7.7s;animation-delay:-2.3s}
+  .polaroid:hover{animation:none;transform:rotate(0deg) translateY(-10px) scale(1.03);box-shadow:0 26px 50px -18px rgba(31,61,43,.55);z-index:5}
+
+  @media(max-width:900px){
+    .hero-grid,.deliver-card,.join-grid,.serv-grid,.gh-grid,.host-grid{grid-template-columns:1fr}
+    .gh-photo,.host-photo{margin:0 auto}
+    .snav nav{display:none}
+    .events-grid{grid-template-columns:1fr 1fr}
+    .scrap{grid-template-columns:repeat(3,1fr)}
+    .foot-grid{grid-template-columns:1fr 1fr}
+    .feature-card{transform:none;max-width:420px;margin:0 auto}
+  }
+  @media(max-width:560px){
+    .events-grid,.foot-grid,.scrap{grid-template-columns:1fr 1fr}
+    .serv{grid-template-columns:1fr}
+    .serv-ph .ph{aspect-ratio:16/9}
+    .lb-nav{width:44px;height:44px;font-size:1.6rem}
+    .lb-prev{left:8px}.lb-next{right:8px}
+  }
+</style>
+</head>
+<body>
+<script>var IMG={};document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-img]').forEach(function(e){var k=e.getAttribute('data-img'); if(IMG[k]){e.src=IMG[k];}});});</script>
+
+<div class="demo-banner">✦ Demo preview for MacMannis Florist — sample dates, prices &amp; spots are placeholders to be confirmed ✦</div>
+
+<!-- sticky nav -->
+<div class="snav">
+  <div class="wrap">
+    <span class="brand">MacMannis <span>Florist</span></span>
+    <nav>
+      <a href="#greenhouse">Greenhouse</a>
+      <a href="#events">Workshops</a>
+      <a href="#services">Services</a>
+      <a href="https://www.macmannisflorist.com/" target="_blank">Order flowers ↗</a>
+    </nav>
+    <a href="#join" class="snav-cta">Join the list</a>
+  </div>
+</div>
+
+<!-- top bar -->
+<div class="topbar">
+  <div class="wrap">
+    <span>📍 2108 Main St, Athol, MA <span class="dot">•</span> ☎ <a href="tel:+19782493595">(978) 249-3595</a></span>
+    <span><a href="https://www.facebook.com/profile.php?id=100051291255327" target="_blank">Follow us on Facebook →</a></span>
+  </div>
+</div>
+
+<!-- hero -->
+<header class="hero">
+  <span class="hero-leaf leaf1">🌿</span>
+  <span class="hero-leaf leaf2">🌸</span>
+  <span class="hero-leaf leaf3">🌿</span>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Fresh flowers, hands-on fun</span>
+      <h1>Flower workshops at our <em>greenhouse</em> in Athol</h1>
+      <p class="lead">Come create something beautiful with us. Seasonal arrangement classes, everyday blooms, weddings &amp; sympathy — grown and designed right here.</p>
+      <div class="cta-row">
+        <a href="#events" class="btn btn-primary">See upcoming workshops 🌷</a>
+        <a href="#join" class="btn btn-ghost">Join the events list</a>
+        <a href="https://www.macmannisflorist.com/" target="_blank" class="btn btn-ghost">Order flowers ↗</a>
+      </div>
+    </div>
+    <div>
+      <div class="feature-card">
+        <span class="feature-badge">Next workshop ✦</span>
+        <div class="ph" data-label="foto: taller destacado">
+          <img alt="Featured summer workshop" src="" data-img="taller-destacado.jpg">
+        </div>
+        <span class="spots">only 6 spots left</span>
+        <div class="feature-meta">
+          <span class="when">Saturday, August 16 · 11am</span>
+          <h3>Summer Blooms Arrangement Class</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- greenhouse feature (family favorite) -->
+<section id="greenhouse">
+  <div class="wrap gh-grid">
+    <div class="gh-photo">
+      <div class="ph" data-label="foto especial del invernadero">
+        <img alt="Inside the MacMannis greenhouse" src="" data-img="invernadero_foto_especial.jpg">
+      </div>
+      <span class="gh-tag">a family favorite 🌼</span>
+    </div>
+    <div>
+      <span class="eyebrow">Come wander our greenhouse</span>
+      <h2>Rows and rows of color, grown right here</h2>
+      <p>Step inside and you're surrounded by it — hanging baskets, blooming annuals, and fresh cuts in every shade. This is where our flowers begin and where our workshops happen.</p>
+      <p>Family-run in Athol, we've been growing and arranging for our neighbors for years. Come say hi. 🌸</p>
+    </div>
+  </div>
+</section>
+
+<!-- workshops / events -->
+<section id="events">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow">Save your seat</span>
+      <h2>Upcoming events &amp; workshops</h2>
+      <p>Small groups, all materials included, and something beautiful to take home. Follow along on Facebook or join our list below so you never miss one.</p>
+    </div>
+
+    <div class="events-grid">
+      <article class="event">
+        <div class="ph" data-label="foto taller (grupo)"><img alt="" src="" data-img="fb-5.jpg" style="object-position:50% 32%"></div>
+        <div class="event-body">
+          <span class="date-chip"><span class="m">Aug</span><span class="d">16</span></span>
+          <h3>Summer Blooms Arrangement Class</h3>
+          <p>Design a bright seasonal centerpiece with sunflowers, echinacea &amp; garden greens. Perfect for beginners.</p>
+          <div class="foot">
+            <span class="price">$45 <span class="demo-flag">ejemplo</span></span>
+            <a href="#join" class="mini">Reserve →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event">
+        <div class="ph" data-label="foto taller (grupo)"><img alt="" src="" data-img="fb-6.jpg" style="object-position:50% 30%"></div>
+        <div class="event-body">
+          <span class="date-chip"><span class="m">Sep</span><span class="d">13</span></span>
+          <h3>Fall Harvest Wreath Workshop</h3>
+          <p>Build a dried-floral wreath for your door with grasses, berries &amp; everlastings from the greenhouse.</p>
+          <div class="foot">
+            <span class="price">$55 <span class="demo-flag">ejemplo</span></span>
+            <a href="#join" class="mini">Reserve →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="event soldout">
+        <div class="ph" data-label="foto: taller 4 de julio"><img alt="" src="" data-img="taller-4-julio.jpg"></div>
+        <div class="event-body">
+          <span class="soldout-ribbon">Sold out — thank you! 🎆</span>
+          <h3>Fourth of July Fresh Flower Class</h3>
+          <p>“Red, white &amp; blooms!” A huge thank-you to everyone who joined us. We had so much fun creating with you.</p>
+          <div class="foot">
+            <span class="price" style="color:var(--muted)">Completed</span>
+            <a href="#join" class="mini">Get the next date →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- greenhouse scrapbook gallery -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow">Straight from our greenhouse</span>
+      <h2>Moments from the greenhouse</h2>
+      <p>A little scrapbook of our blooms &amp; baskets. Tap any photo to see it bigger.</p>
+    </div>
+    <div class="scrap">
+      <figure class="polaroid" data-gallery="greenhouse" data-index="0"><div class="ph" data-label="greenhouse 1"><img alt="" src="" data-img="fb_greenhouse.jpg"></div><figcaption>our greenhouse</figcaption></figure>
+      <figure class="polaroid" data-gallery="greenhouse" data-index="1"><div class="ph" data-label="greenhouse 2"><img alt="" src="" data-img="fb_greenhouse2.jpg"></div><figcaption>rows of color</figcaption></figure>
+      <figure class="polaroid" data-gallery="greenhouse" data-index="2"><div class="ph" data-label="greenhouse 3"><img alt="" src="" data-img="fb_greenhouse3.jpg"></div><figcaption>hanging baskets</figcaption></figure>
+      <figure class="polaroid" data-gallery="greenhouse" data-index="3"><div class="ph" data-label="greenhouse 4"><img alt="" src="" data-img="fb_greenhouse4.jpg"></div><figcaption>blooms everywhere</figcaption></figure>
+      <figure class="polaroid" data-gallery="greenhouse" data-index="4"><div class="ph" data-label="greenhouse 5"><img alt="" src="" data-img="fb_greenhouse6.jpg"></div><figcaption>come wander 🌿</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- services -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow">Beyond the workshops</span>
+      <h2>What we grow &amp; design</h2>
+      <p>Family-run in Athol for every season and every occasion. Tap a photo to see more of our work.</p>
+    </div>
+
+    <div class="serv-grid">
+      <article class="serv">
+        <button class="serv-ph" data-gallery="weddings" aria-label="View wedding photos">
+          <div class="ph" data-label="foto: bodas"><img alt="" src="" data-img="fb_novia.jpg" style="object-position:50% 18%"></div>
+          <span class="serv-more">🔍 View photos</span>
+        </button>
+        <div class="serv-body">
+          <h3>Weddings <span class="tag">by inquiry</span></h3>
+          <p>Bouquets, ceremony &amp; reception florals designed around your day. Tell us your vision and we'll take it from there.</p>
+          <div class="serv-links">
+            <button class="mini" data-gallery="weddings">See our wedding work →</button>
+            <a href="mailto:macmannisflorist@gmail.com?subject=Wedding%20inquiry%20%F0%9F%8C%B8&amp;body=Hi%20MacMannis!%20I'd%20love%20to%20talk%20about%20flowers%20for%20my%20wedding." class="mini">Start a wedding inquiry →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="serv">
+        <button class="serv-ph" data-gallery="greenhouse" aria-label="View greenhouse photos">
+          <div class="ph" data-label="foto: invernadero"><img alt="" src="" data-img="fb_greenhouse4.jpg"></div>
+          <span class="serv-more">🔍 View photos</span>
+        </button>
+        <div class="serv-body">
+          <h3>Greenhouse &amp; plants</h3>
+          <p>Locally grown seasonal plants, blooming baskets &amp; greenery — come wander the greenhouse and pick your favorites.</p>
+          <div class="serv-links">
+            <button class="mini" data-gallery="greenhouse">See the greenhouse →</button>
+            <a href="https://maps.google.com/?q=2108+Main+St,+Athol,+MA+01331" target="_blank" class="mini">Visit us →</a>
+            <a href="https://www.facebook.com/profile.php?id=100051291255327" target="_blank" class="mini">Follow us on Facebook →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="serv">
+        <button class="serv-ph" data-gallery="sympathy" aria-label="View sympathy photos">
+          <div class="ph" data-label="foto: sympathy"><img alt="" src="" data-img="fb_funeral.jpg"></div>
+          <span class="serv-more">🔍 View photos</span>
+        </button>
+        <div class="serv-body">
+          <h3>Sympathy &amp; funeral</h3>
+          <p>Thoughtful arrangements delivered with care to homes and services, when the right words are hard to find.</p>
+          <div class="serv-links">
+            <button class="mini" data-gallery="sympathy">See sympathy designs →</button>
+            <a href="https://www.macmannisflorist.com/" target="_blank" class="mini">Send sympathy flowers →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="serv">
+        <button class="serv-ph" data-gallery="everyday" aria-label="View everyday photos">
+          <div class="ph" data-label="foto: everyday"><img alt="" src="" data-img="fb-arreglo-floral-boda.jpg"></div>
+          <span class="serv-more">🔍 View photos</span>
+        </button>
+        <div class="serv-body">
+          <h3>Everyday flowers &amp; delivery</h3>
+          <p>Birthdays, anniversaries, “just because.” Order online through our shop and we'll deliver locally.</p>
+          <div class="serv-links">
+            <button class="mini" data-gallery="everyday">See fresh blooms →</button>
+            <a href="https://www.macmannisflorist.com/" target="_blank" class="mini">Shop &amp; send flowers →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- meet your host -->
+<section id="host">
+  <div class="wrap host-grid">
+    <div class="host-text">
+      <span class="eyebrow">Meet your host</span>
+      <h2>Led by the family who grows the flowers</h2>
+      <p>Our workshops aren't run by a stranger — they're led by the same hands that tend the greenhouse every day. Expect patient guidance, a few laughs, and a beautiful arrangement to take home.</p>
+      <p class="host-name">— Beth Jaillet, MacMannis Florist &amp; Greenhouses</p>
+    </div>
+    <div class="host-photo">
+      <div class="ph" data-label="foto: propietaria en taller">
+        <img alt="The owner leading a workshop" src="" data-img="fb_propietaria.jpg">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- delivery -->
+<section id="delivery">
+  <div class="wrap">
+    <div class="deliver-card">
+      <div>
+        <span class="eyebrow" style="color:var(--pink);font-size:1.5rem">We deliver locally</span>
+        <h2 class="serif" style="font-size:2rem;color:var(--green);margin-top:4px">Fresh flowers to your door</h2>
+        <p style="color:var(--muted);margin-top:10px">Proudly serving Athol and the surrounding North Quabbin towns. A $10 local delivery fee is added per address.</p>
+        <p class="note">For Ashburnham, Gill, Hardwick, Hubbardston, Leverett, Montague, New Braintree, Northfield, Shutesbury &amp; Westminster a $75 minimum plus delivery applies.</p>
+      </div>
+      <div>
+        <div class="cities">
+          <span class="city">Athol</span>
+          <span class="city">Ashburnham</span>
+          <span class="city">Gill</span>
+          <span class="city">Hardwick</span>
+          <span class="city">Hubbardston</span>
+          <span class="city">Leverett</span>
+          <span class="city">Montague</span>
+          <span class="city">New Braintree</span>
+          <span class="city">Northfield</span>
+          <span class="city">Shutesbury</span>
+          <span class="city">Westminster</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- join events list -->
+<section id="join">
+  <div class="wrap join-grid">
+    <div>
+      <span class="eyebrow">Never miss a workshop</span>
+      <h2>Join our events list</h2>
+      <p>Be the first to hear what we have in store each month — new workshops, seasonal classes &amp; special events. No more waiting for the Facebook post.</p>
+    </div>
+    <div>
+      <form class="form-card" id="eventsForm">
+        <label for="name">First name</label>
+        <input id="name" name="name" type="text" placeholder="Your name" required>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="you@email.com" required>
+        <button type="submit" class="btn btn-primary">Add me to the list</button>
+        <p class="form-hint" id="formHint">You'll get a note before each workshop. No spam. 🌷</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- facebook feed -->
+<section id="facebook" style="background:#fbf6ea">
+  <div class="wrap">
+    <div class="sec-head center">
+      <span class="eyebrow">Follow along</span>
+      <h2>Latest from our Facebook</h2>
+      <p>See our newest blooms, workshops &amp; happenings — straight from our page.</p>
+    </div>
+    <div style="display:flex;justify-content:center">
+      <iframe title="MacMannis Facebook" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100051291255327&tabs=timeline&width=500&height=640&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" width="500" height="640" style="border:none;overflow:hidden;max-width:100%;border-radius:16px;box-shadow:var(--shadow)" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- footer -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo">MacMannis <span>Florist &amp; Greenhouses</span></div>
+        <p style="margin-top:12px;max-width:34ch">Family-run flowers, plants &amp; workshops in Athol, Massachusetts.</p>
+        <p style="margin-top:14px">✉ <a href="mailto:macmannisfloristevents@gmail.com">macmannisfloristevents@gmail.com</a></p>
+        <p>☎ <a href="tel:+19782493595">(978) 249-3595</a></p>
+        <p>📍 2108 Main St, Athol, MA 01331</p>
+        <div class="social">
+          <a href="https://www.facebook.com/profile.php?id=100051291255327" target="_blank" aria-label="Facebook" title="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M15.12 5.32H17V2.14A26.11 26.11 0 0 0 14.26 2c-2.72 0-4.58 1.66-4.58 4.7v2.6H6.61v3.56h3.07V22h3.68v-9.14h3.06l.46-3.56h-3.52V7.05c0-1.03.28-1.73 1.76-1.73z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram" title="Instagram (coming soon)" data-soon>
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85s0-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
+          </a>
+          <a href="https://www.macmannisflorist.com/" target="_blank" aria-label="Shop flowers (Teleflora)" title="Shop flowers">
+            <svg viewBox="0 0 24 24"><path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <div class="hours-row"><span>Mon – Fri</span><span>9:00 – 5:30</span></div>
+        <div class="hours-row"><span>Saturday</span><span>9:00 – 3:00</span></div>
+        <div class="hours-row"><span>Sunday</span><span>Closed</span></div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <p><a href="#events">Workshops &amp; events</a></p>
+        <p><a href="#services">Weddings</a></p>
+        <p><a href="https://www.macmannisflorist.com/" target="_blank">Shop flowers</a></p>
+        <p><a href="https://www.facebook.com/profile.php?id=100051291255327" target="_blank">Facebook</a></p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© MacMannis Florist &amp; Greenhouses · Athol, MA</span>
+      <span>Demo by ScaleAI360</span>
+    </div>
+  </div>
+</footer>
+
+<!-- lightbox -->
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <figure class="lb-stage">
+    <img id="lbImg" src="" alt="">
+    <figcaption id="lbCap"></figcaption>
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-count"><span id="lbI">1</span> / <span id="lbN">1</span></div>
+</div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- sticky nav ---- */
+  var snav = document.querySelector('.snav');
+  if(snav){
+    var onScroll = function(){
+      if(window.scrollY > 560){ snav.classList.add('show'); } else { snav.classList.remove('show'); }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+  }
+
+  /* ---- lightbox galleries ---- */
+  var GAL = {
+    weddings: [
+      {src:IMG['fb_novia.jpg'], cap:'The bride 🤍'},
+      {src:IMG['fb-ramo-boda.jpg'], cap:'Bridal bouquet'},
+      {src:IMG['fb-arreglo-floral-boda.jpg'], cap:'Reception centerpiece'},
+      {src:IMG['fb-boda-feliz.jpg'], cap:'The big day 💍'},
+      {src:IMG['fb-boda.jpg'], cap:'Special occasions'}
+    ],
+    greenhouse: [
+      {src:IMG['fb_greenhouse.jpg'], cap:'Our greenhouse'},
+      {src:IMG['fb_greenhouse2.jpg'], cap:'Rows of color'},
+      {src:IMG['fb_greenhouse3.jpg'], cap:'Hanging baskets'},
+      {src:IMG['fb_greenhouse4.jpg'], cap:'Blooms everywhere'},
+      {src:IMG['fb_greenhouse6.jpg'], cap:'Come wander 🌿'},
+      {src:IMG['invernadero_foto_especial.jpg'], cap:'A family favorite 🌼'},
+      {src:IMG['fb-2.jpg'], cap:'Zinnias, fresh grown'}
+    ],
+    sympathy: [
+      {src:IMG['fb_funeral.jpg'], cap:'Sympathy wreath'}
+    ],
+    everyday: [
+      {src:IMG['fb-arreglo-floral-boda.jpg'], cap:'Fresh arrangement'},
+      {src:IMG['fb-1.jpg'], cap:'Monarch on echinacea'},
+      {src:IMG['fb-3.jpg'], cap:'Sunflower after rain'},
+      {src:IMG['fb-4.jpg'], cap:'Garden cosmos'}
+    ]
+  };
+
+  var lb = document.getElementById('lb'),
+      lbImg = document.getElementById('lbImg'),
+      lbCap = document.getElementById('lbCap'),
+      lbI = document.getElementById('lbI'),
+      lbN = document.getElementById('lbN');
+  var curSet = [], curIdx = 0;
+
+  function render(){
+    var item = curSet[curIdx];
+    if(!item) return;
+    lbImg.src = item.src;
+    lbImg.alt = item.cap || '';
+    lbCap.textContent = item.cap || '';
+    lbI.textContent = (curIdx+1);
+    lbN.textContent = curSet.length;
+    var multi = curSet.length > 1;
+    document.getElementById('lbPrev').style.display = multi ? '' : 'none';
+    document.getElementById('lbNext').style.display = multi ? '' : 'none';
+  }
+  function openGallery(key, idx){
+    curSet = GAL[key] || [];
+    if(!curSet.length) return;
+    curIdx = idx || 0;
+    render();
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeGallery(){
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
+  function step(d){ curIdx = (curIdx + d + curSet.length) % curSet.length; render(); }
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest ? e.target.closest('[data-gallery]') : null;
+    if(el){ e.preventDefault(); openGallery(el.getAttribute('data-gallery'), parseInt(el.getAttribute('data-index')||'0',10)); }
+  });
+  document.getElementById('lbClose').addEventListener('click', closeGallery);
+  document.getElementById('lbPrev').addEventListener('click', function(){ step(-1); });
+  document.getElementById('lbNext').addEventListener('click', function(){ step(1); });
+  lb.addEventListener('click', function(e){ if(e.target === lb) closeGallery(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('open')) return;
+    if(e.key === 'Escape') closeGallery();
+    else if(e.key === 'ArrowLeft') step(-1);
+    else if(e.key === 'ArrowRight') step(1);
+  });
+
+  if(reduce) return;
+
+  /* ---- scroll reveal ---- */
+  var reveal = ['.sec-head','.feature-card','#greenhouse .gh-photo','#greenhouse .gh-grid > div:last-child',
+    '#host .host-text','#host .host-photo','.event','.serv','.deliver-card','.form-card',
+    '#join .join-grid > div:first-child'];
+  reveal.forEach(function(sel){
+    document.querySelectorAll(sel).forEach(function(el){ el.classList.add('reveal'); });
+  });
+  document.querySelectorAll('.polaroid').forEach(function(el){ el.classList.add('reveal-fade'); });
+  ['.events-grid','.scrap','.serv-grid'].forEach(function(sel){
+    var c = document.querySelector(sel); if(!c) return;
+    Array.prototype.forEach.call(c.children, function(ch,i){ ch.style.transitionDelay = (i*0.09)+'s'; });
+  });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal, .reveal-fade').forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<!-- Events form: preview (muestra éxito, sin servicio). Para envío real al correo -> Web3Forms/Netlify Forms cuando la clienta confirme. -->
+<script>
+(function(){
+  var form=document.getElementById('eventsForm'); if(!form) return;
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    form.innerHTML='<div style="text-align:center;padding:20px"><div style="font-size:2rem">🌸</div><h3 style="font-family:Fraunces,serif;color:var(--green);margin:8px 0">You\'re on the list!</h3><p style="color:var(--muted)">We\'ll see you at the next workshop.</p></div>';
+  });
+})();
+</script>
+
+<!-- Airtable hydration: si hay token guardado, la web bonita se actualiza sola desde Airtable -->
+<script>
+(function(){
+  var token = localStorage.getItem('mac_at_token');
+  if(!token) return; // sin token, se queda el contenido estático (siempre se ve bien)
+
+  var BASE='appuOstkV81qz6yHK', T_EVENTS='tblTDR9i7uNqEJLsD', T_GAL='tbl86gCse3cCmGcPl';
+  var EV={title:'fldPFb8OHfHFomjiI',date:'fld7gMFsDBZLiQ08D',price:'fldA3lD1ka6EnIrt0',spots:'fldzwvRJtmKkAO8Fe',status:'fldBjGpCGYYS86tca',desc:'fldiWm4mwShD0c4iB',photo:'fldXAfrzumUHZvBEv',show:'fldW4EDiKAvJz0uGF',fit:'fld33QJdRmA5tMN0x'};
+  var GA={name:'fldiqJlhMqH3H3XMB',cat:'fldn9686dqeRJsDU9',photo:'fldSIs4kqAx8PDooP',cap:'fldkDgupoXYu0a132',order:'flduHVKY9c3KZycUz',show:'fldXBclir3hM0G5fZ',fit:'flduyfEgPgkfj7sEH'};
+  var FB_EV={'Summer Blooms Arrangement Class':IMG['fb-5.jpg'],'Fall Harvest Wreath Workshop':IMG['fb-6.jpg'],'Fourth of July Fresh Flower Class':IMG['taller-4-julio.jpg']};
+  var FB_GA={'Greenhouse 1':IMG['fb_greenhouse.jpg'],'Greenhouse 2':IMG['fb_greenhouse2.jpg'],'Greenhouse 3':IMG['fb_greenhouse3.jpg'],'Greenhouse 4':IMG['fb_greenhouse4.jpg'],'Greenhouse 5':IMG['fb_greenhouse6.jpg']};
+  var MONTHS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var MONTHS_L=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var WD=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  function esc(s){return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function api(t){return fetch('https://api.airtable.com/v0/'+BASE+'/'+t+'?returnFieldsByFieldId=true&pageSize=100',{headers:{Authorization:'Bearer '+token}}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();});}
+  function md(iso){if(!iso)return{m:'',d:''};var p=iso.split('-');return{m:MONTHS[parseInt(p[1],10)-1],d:parseInt(p[2],10)};}
+  function pretty(iso){if(!iso)return'';var p=iso.split('-');var dt=new Date(Date.UTC(+p[0],+p[1]-1,+p[2]));return WD[dt.getUTCDay()]+', '+MONTHS_L[+p[1]-1]+' '+(+p[2]);}
+  function pic(f,pid,name,fb){var a=f[pid];if(a&&a.length&&a[0].url)return a[0].url;return fb[name]||'';}
+  function fitStyle(v,def){
+    if(v==='Arriba') return 'object-position:50% 15%';
+    if(v==='Abajo') return 'object-position:50% 85%';
+    if(v==='Foto completa') return 'object-fit:contain;background:#f1e8d4';
+    if(v==='Centro') return 'object-position:50% 50%';
+    return 'object-position:'+(def||'50% 50%');
+  }
+
+  Promise.all([api(T_EVENTS),api(T_GAL)]).then(function(res){
+    hydrateEvents(res[0].records);
+    hydrateHero(res[0].records);
+    hydrateGreenhouse(res[1].records);
+  }).catch(function(e){ /* si falla, se queda lo estático */ console.log('Airtable hydration off:',e.message); });
+
+  function order(recs, showFid){ return recs.filter(function(r){return r.fields[showFid]!==false;}); }
+
+  function hydrateEvents(recs){
+    recs=order(recs,EV.show);
+    if(!recs.length) return;
+    var box=document.querySelector('.events-grid'); if(!box) return;
+    box.innerHTML=recs.map(function(r){
+      var f=r.fields, sold=(f[EV.status]==='Agotado'), past=(f[EV.status]==='Pasado');
+      var m=md(f[EV.date]), img=pic(f,EV.photo,f[EV.title],FB_EV);
+      var top = sold ? '<span class="soldout-ribbon">Sold out — thank you! 🎆</span>'
+        : '<span class="date-chip"><span class="m">'+m.m+'</span><span class="d">'+m.d+'</span></span>';
+      var foot = sold ? '<span class="price" style="color:var(--muted)">Sold out</span><a href="#join" class="mini">Get the next date →</a>'
+        : (past ? '<span class="price" style="color:var(--muted)">Completed</span><a href="#join" class="mini">Get the next date →</a>'
+        : '<span class="price">$'+(f[EV.price]!=null?f[EV.price]:'—')+'</span><a href="#join" class="mini">Reserve →</a>');
+      return '<article class="event'+(sold?' soldout':'')+'"><div class="ph" data-label="foto evento">'
+        +(img?'<img alt="" src="'+esc(img)+'" style="'+fitStyle(f[EV.fit],'50% 35%')+'">':'')
+        +'</div><div class="event-body">'+top+'<h3>'+esc(f[EV.title])+'</h3><p>'+esc(f[EV.desc])+'</p>'
+        +'<div class="foot">'+foot+'</div></div></article>';
+    }).join('');
+  }
+
+  function hydrateHero(recs){
+    var up=order(recs,EV.show).filter(function(r){return r.fields[EV.status]==='Próximo';})
+      .sort(function(a,b){return (a.fields[EV.date]||'')<(b.fields[EV.date]||'')?-1:1;});
+    if(!up.length) return;
+    var f=up[0].fields;
+    var when=document.querySelector('.feature-meta .when'); if(when) when.textContent=pretty(f[EV.date]);
+    var h3=document.querySelector('.feature-meta h3'); if(h3) h3.textContent=f[EV.title]||'';
+    var spots=document.querySelector('.feature-card .spots');
+    if(spots){ if(f[EV.spots]!=null){ spots.style.display=''; spots.textContent='only '+f[EV.spots]+' spots left'; } else { spots.style.display='none'; } }
+    var img=pic(f,EV.photo,f[EV.title],FB_EV);
+    var heroImg=document.querySelector('.feature-card .ph img');
+    if(heroImg){ if(f[EV.photo] && f[EV.photo].length) heroImg.src=img; heroImg.setAttribute('style', fitStyle(f[EV.fit],'50% 50%')); }
+  }
+
+  function hydrateGreenhouse(recs){
+    var items=order(recs,GA.show).filter(function(r){return r.fields[GA.cat]==='Greenhouse';})
+      .sort(function(a,b){return (a.fields[GA.order]||0)-(b.fields[GA.order]||0);});
+    if(!items.length) return;
+    var scrap=document.querySelector('#gallery .scrap'); if(!scrap) return;
+    scrap.innerHTML=items.map(function(r,i){
+      var f=r.fields, img=pic(f,GA.photo,f[GA.name],FB_GA);
+      return '<figure class="polaroid reveal-fade in" data-gallery="greenhouse" data-index="'+i+'"><div class="ph" data-label="greenhouse">'
+        +(img?'<img alt="" src="'+esc(img)+'" style="'+fitStyle(f[GA.fit],'50% 50%')+'">':'')
+        +'</div><figcaption>'+esc(f[GA.cap]||f[GA.name]||'')+'</figcaption></figure>';
+    }).join('');
+  }
+})();
+</script>
+
+</body>
+</html>
